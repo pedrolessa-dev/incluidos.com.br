@@ -18,8 +18,10 @@ test("POST to /api/v1/migrations should return 200", async () => {
   expect(Array.isArray(body)).toBe(true);
   expect(body.length).toBeGreaterThan(0);
 
-  const results = await database.query("SELECT count(*) FROM pgmigrations");
-  expect(parseInt(results.rows[0].count)).toBeGreaterThan(0);
+  const results = await database.query(
+    "SELECT count(*)::int FROM pgmigrations",
+  );
+  expect(results.rows[0].count).toBeGreaterThan(0);
 });
 
 test("POST to /api/v1/migrations should return an empty array", async () => {
